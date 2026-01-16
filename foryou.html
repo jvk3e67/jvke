@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click Me</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: rgb(255, 255, 255);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fredoka', sans-serif;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    button {
+      padding: 14px 26px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    .start-btn {
+      background: black;
+      color: white;
+    }
+
+    .question {
+      font-size: 24px;
+      margin-bottom: 25px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 120px;
+    }
+
+    .yes-btn {
+      background: rgb(0, 0, 0);
+      color: white;
+    }
+
+    .no-btn {
+      background: #ddd;
+      color: black;
+      position: absolute;
+      left: 50%;
+      top: 60%;
+      transform: translate(-50%, -50%);
+    }
+
+    .hint {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #000000;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 16px;
+      margin-top: 20px;
+    }
+
+    .yippee {
+      font-family: 'Times New Roman', cursive;
+      font-size: 36px;
+      color: rgb(0, 0, 0);
+      margin-top: 15px;
+    }
+
+    /* Hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 26px;
+      animation: floatUp linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-110vh) scale(1.6);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <button id="startBtn" class="start-btn">Click me</button>
+
+    <div id="questionBox" class="hidden">
+      <div class="question">do i have a chance twin?</div>
+
+      <div class="buttons">
+        <button id="yesBtn" class="yes-btn">Yes</button>
+        <button id="noBtn" class="no-btn">No</button>
+      </div>
+
+      <div id="hint" class="hint hidden">
+        ngl twin wrong choice
+      </div>
+    </div>
+
+    <div id="result" class="hidden">
+      <img src="data:image/jpeg;base64,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"> Good choice twin
+      <div class="yippee">heck yeah</div>
+    </div>
+
+  </div>
+
+  <!-- Sound -->
+  <audio id="noSound" src="https://orangefreessounds.com/wp-content/uploads/2025/01/Yippee-sound-effect.mp3"></audio>
+  <script>
+    const startBtn = document.getElementById("startBtn");
+    const questionBox = document.getElementById("questionBox");
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const hint = document.getElementById("hint");
+    const result = document.getElementById("result");
+
+    startBtn.onclick = () => {
+      startBtn.classList.add("hidden");
+      questionBox.classList.remove("hidden");
+    };
+
+    function moveNoButton() {
+      const x = Math.random() * 70;
+      const y = Math.random() * 70;
+      noBtn.style.left = x + "%";
+      noBtn.style.top = y + "%";
+
+      hint.classList.remove("hidden");
+      hint.innerText = "cmon kate just press yes twin🙏";
+
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    // Works for mouse + mobile touch
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton);
+
+    yesBtn.onclick = () => {
+      questionBox.classList.add("hidden");
+      result.classList.remove("hidden");
+      startHearts();
+    };
+
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 5000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
